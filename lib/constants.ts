@@ -6,7 +6,11 @@ export const SITE_NAME = "MKTrading";
 export const SITE_TAGLINE = "Trade with clarity.";
 export const SITE_DESCRIPTION =
   "MKTrading is a digital trading platform built around transparent pricing, clear risk information, and a focused trading experience.";
-export const SITE_URL = "https://mktradingv1.com";
+// Overridable via env (staging, previews, ...); the app's own trusted
+// base URL — used for links in emails, so this must never be derived
+// from a request's Host header (host-header injection risk).
+export const SITE_URL =
+  process.env.SITE_URL ?? (process.env.NODE_ENV === "production" ? "https://mktradingv1.com" : "http://localhost:3000");
 
 export const PRIMARY_NAV: NavLink[] = [
   { label: "Markets", href: "/markets" },
