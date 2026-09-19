@@ -21,6 +21,10 @@ export const RATE_LIMITS = {
   passwordResetRequestPerIdentifier: { windowMs: HOUR, limit: 3 },
   passwordResetRequestPerIp: { windowMs: HOUR, limit: 10 },
   mfaVerifyPerPendingLogin: { windowMs: 10 * MINUTE, limit: 5 },
+  // Every admin wallet action (approve/reject/processing/complete/adjust)
+  // requires a fresh MFA code — rate-limited the same way login MFA is.
+  adminStepUpPerAdmin: { windowMs: 10 * MINUTE, limit: 10 },
+  withdrawalRequestPerUser: { windowMs: HOUR, limit: 10 },
 } as const;
 
 export const SESSION_COOKIE_NAME = "mktrading_session";

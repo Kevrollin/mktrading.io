@@ -14,7 +14,8 @@
     "db:status": "supabase status",
     "db:migration:new": "supabase migration new",
     "db:reset": "supabase db reset",
-    "db:test:reset": "tsx lib/db/migrate-cli.ts"
+    "db:test:reset": "tsx lib/db/migrate-cli.ts",
+    "seed:demo-admins": "tsx scripts/seed-demo-admins.ts"
   },
   "dependencies": {
     "@node-rs/argon2": "^2.2.1",
@@ -23,6 +24,7 @@
     "@radix-ui/react-slot": "^1.3.3",
     "@radix-ui/react-tabs": "^1.1.21",
     "@radix-ui/react-tooltip": "^1.2.16",
+    "bitcoin-address-validation": "^4.0.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "drizzle-orm": "^0.45.2",

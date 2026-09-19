@@ -8,3 +8,7 @@ export * from "@/lib/db/schema/login-events";
 export * from "@/lib/db/schema/rate-limit";
 export * from "@/lib/db/schema/notifications";
 export * from "@/lib/db/schema/audit-log";
+export * from "@/lib/db/schema/currencies";
+export * from "@/lib/db/schema/ledger";
+export * from "@/lib/db/schema/withdrawals";
+export * from "@/lib/db/schema/platform-wallets";

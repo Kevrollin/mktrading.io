@@ -29,3 +29,8 @@ export const db = globalThis.__dbClient ?? createClient();
 if (process.env.NODE_ENV !== "production") {
   globalThis.__dbClient = db;
 }
+
+/** The type of `tx` inside `db.transaction(async (tx) => ...)` — used by
+ * helpers (ledger posting, withdrawal state machine) that must run inside
+ * an existing transaction rather than opening their own. */
+export type DbTransaction = Parameters<Parameters<typeof db.transaction>[0]>[0];

@@ -10,3 +10,12 @@ values
   (gen_random_uuid(), 'OPERATIONS_ADMIN', 'Day-to-day platform operations authority.'),
   (gen_random_uuid(), 'RISK_ADMIN', 'Risk monitoring and account restriction authority.')
 on conflict ("name") do nothing;
+
+insert into "currencies" ("code", "name", "kind", "decimals")
+values
+  ('KES', 'Kenyan Shilling', 'FIAT', 2),
+  ('USD', 'US Dollar', 'FIAT', 2),
+  ('BTC', 'Bitcoin', 'CRYPTO', 8),
+  ('USDT', 'Tether', 'CRYPTO', 6),
+  ('USDC', 'USD Coin', 'CRYPTO', 6)
+on conflict ("code") do nothing;
