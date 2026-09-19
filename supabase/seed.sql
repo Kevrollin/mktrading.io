@@ -19,3 +19,17 @@ values
   ('USDT', 'Tether', 'CRYPTO', 6),
   ('USDC', 'USD Coin', 'CRYPTO', 6)
 on conflict ("code") do nothing;
+
+-- Ids/symbols/names/categories match lib/demo-markets.ts (the marketing
+-- placeholder data) for continuity — QRTZ starts inactive, mirroring its
+-- "closed" status there. minStake/maxStake apply in the trade's chosen
+-- wallet currency's own units directly (no FX conversion).
+insert into "instruments" ("id", "symbol", "name", "category", "is_active", "payout_percent", "allowed_durations_seconds", "min_stake", "max_stake")
+values
+  ('pulse-index', 'PULS', 'Pulse Index', 'rapid', true, 85.00, '{30,60,300}', 1, 1000),
+  ('nova-index', 'NOVA', 'Nova Index', 'rapid', true, 85.00, '{30,60,300}', 1, 1000),
+  ('tidal-range', 'TIDE', 'Tidal Range', 'range-bound', true, 85.00, '{60,300}', 1, 1000),
+  ('ember-index', 'EMBR', 'Ember Index', 'standard', true, 85.00, '{60,300}', 1, 1000),
+  ('quartz-index', 'QRTZ', 'Quartz Index', 'standard', false, 85.00, '{60,300}', 1, 1000),
+  ('drift-index', 'DRFT', 'Drift Index', 'range-bound', true, 85.00, '{60,300}', 1, 1000)
+on conflict ("id") do nothing;

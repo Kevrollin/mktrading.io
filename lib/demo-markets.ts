@@ -5,6 +5,11 @@ import type { Market } from "@/types/market";
  * market data. Values are hardcoded literals (not generated at render time)
  * so server and client always agree; never derive this from Math.random() or
  * Date.now(), which would cause a hydration mismatch.
+ *
+ * The real trading engine's `instruments` table (lib/db/schema/instruments.ts,
+ * seeded in supabase/seed.sql) reuses these same ids/symbols/names/categories
+ * for continuity — the two are independent sources of truth, not synced.
+ * Editing one never updates the other.
  */
 export const DEMO_MARKETS: Market[] = [
   {

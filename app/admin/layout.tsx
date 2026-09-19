@@ -7,7 +7,10 @@ import { Logo } from "@/components/layout/logo";
 import { requireAdmin } from "@/lib/auth/rbac";
 
 const BASE_NAV = [{ label: "Withdrawals", href: "/admin/withdrawals" }];
-const SUPER_ADMIN_NAV = [{ label: "Platform Wallet", href: "/admin/platform-wallet" }];
+const SUPER_ADMIN_NAV = [
+  { label: "Platform Wallet", href: "/admin/platform-wallet" },
+  { label: "Instruments", href: "/admin/instruments" },
+];
 
 export default async function AdminLayout({ children }: { children: ReactNode }) {
   // The authoritative, DB-verified check — proxy.ts only did a cheap

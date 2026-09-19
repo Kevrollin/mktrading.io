@@ -25,6 +25,9 @@ export const RATE_LIMITS = {
   // requires a fresh MFA code — rate-limited the same way login MFA is.
   adminStepUpPerAdmin: { windowMs: 10 * MINUTE, limit: 10 },
   withdrawalRequestPerUser: { windowMs: HOUR, limit: 10 },
+  // The live price chart polls roughly once a second per open chart.
+  tradingPricePollPerUser: { windowMs: MINUTE, limit: 120 },
+  tradePlacementPerUser: { windowMs: HOUR, limit: 60 },
 } as const;
 
 export const SESSION_COOKIE_NAME = "mktrading_session";

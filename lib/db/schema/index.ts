@@ -12,3 +12,5 @@ export * from "@/lib/db/schema/currencies";
 export * from "@/lib/db/schema/ledger";
 export * from "@/lib/db/schema/withdrawals";
 export * from "@/lib/db/schema/platform-wallets";
+export * from "@/lib/db/schema/instruments";
+export * from "@/lib/db/schema/trades";

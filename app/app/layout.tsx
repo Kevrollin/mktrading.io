@@ -9,6 +9,7 @@ import { getCurrentUserRoles, isAdminRole } from "@/lib/auth/rbac";
 
 const BASE_NAV = [
   { label: "Overview", href: "/app" },
+  { label: "Trade", href: "/app/trade" },
   { label: "Wallet", href: "/app/wallet" },
   { label: "Security", href: "/app/security" },
   { label: "Profile", href: "/app/profile" },
