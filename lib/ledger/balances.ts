@@ -1,13 +1,15 @@
 import { and, eq, inArray, sql } from "drizzle-orm";
 import { db } from "@/lib/db/client";
-import { currencies, ledgerAccounts, withdrawals } from "@/lib/db/schema";
+import { currencies, deposits, ledgerAccounts, withdrawals } from "@/lib/db/schema";
 
 export interface CurrencyBalance {
   currency: string;
   available: string;
   locked: string;
-  /** Always "0" — no real deposit rail exists yet; nothing ever posts a
-   * DEPOSIT_PENDING entry in this milestone. */
+  /** Sourced from deposits.status = 'PENDING', not a ledger entry —
+   * DEPOSIT_PENDING in transactionTypeValues is deliberately never
+   * posted (see lib/db/schema/ledger.ts), the same way pendingWithdrawal
+   * below is sourced from withdrawals.status, not ledger_entries. */
   pendingDeposit: string;
   pendingWithdrawal: string;
   total: string;
@@ -27,7 +29,7 @@ const PENDING_WITHDRAWAL_STATUSES = [
  * this side.
  */
 export async function getWalletSummary(userId: string): Promise<CurrencyBalance[]> {
-  const [activeCurrencies, ledgerRows, pendingRows] = await Promise.all([
+  const [activeCurrencies, ledgerRows, pendingWithdrawalRows, pendingDepositRows] = await Promise.all([
     db.select({ code: currencies.code }).from(currencies).where(eq(currencies.isActive, true)),
     db
       .select({
@@ -49,10 +51,19 @@ export async function getWalletSummary(userId: string): Promise<CurrencyBalance[
         and(eq(withdrawals.userId, userId), inArray(withdrawals.status, PENDING_WITHDRAWAL_STATUSES)),
       )
       .groupBy(withdrawals.currency),
+    db
+      .select({
+        currency: deposits.currency,
+        pending: sql<string>`coalesce(sum(${deposits.requestedAmount}), 0)`,
+      })
+      .from(deposits)
+      .where(and(eq(deposits.userId, userId), eq(deposits.status, "PENDING")))
+      .groupBy(deposits.currency),
   ]);
 
   const ledgerByCurrency = new Map(ledgerRows.map((row) => [row.currency, row]));
-  const pendingByCurrency = new Map(pendingRows.map((row) => [row.currency, row.pending]));
+  const pendingWithdrawalByCurrency = new Map(pendingWithdrawalRows.map((row) => [row.currency, row.pending]));
+  const pendingDepositByCurrency = new Map(pendingDepositRows.map((row) => [row.currency, row.pending]));
 
   return activeCurrencies.map(({ code }) => {
     const ledger = ledgerByCurrency.get(code);
@@ -60,8 +71,8 @@ export async function getWalletSummary(userId: string): Promise<CurrencyBalance[
       currency: code,
       available: ledger?.available ?? "0",
       locked: ledger?.locked ?? "0",
-      pendingDeposit: "0",
-      pendingWithdrawal: pendingByCurrency.get(code) ?? "0",
+      pendingDeposit: pendingDepositByCurrency.get(code) ?? "0",
+      pendingWithdrawal: pendingWithdrawalByCurrency.get(code) ?? "0",
       total: ledger?.total ?? "0",
     };
   });

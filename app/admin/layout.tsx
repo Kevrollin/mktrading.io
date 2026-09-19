@@ -6,7 +6,10 @@ import { SkipLink } from "@/components/ui/skip-link";
 import { Logo } from "@/components/layout/logo";
 import { requireAdmin } from "@/lib/auth/rbac";
 
-const BASE_NAV = [{ label: "Withdrawals", href: "/admin/withdrawals" }];
+const BASE_NAV = [
+  { label: "Withdrawals", href: "/admin/withdrawals" },
+  { label: "Deposits", href: "/admin/deposits" },
+];
 const SUPER_ADMIN_NAV = [
   { label: "Platform Wallet", href: "/admin/platform-wallet" },
   { label: "Instruments", href: "/admin/instruments" },

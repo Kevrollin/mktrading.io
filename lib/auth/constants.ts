@@ -28,6 +28,7 @@ export const RATE_LIMITS = {
   // The live price chart polls roughly once a second per open chart.
   tradingPricePollPerUser: { windowMs: MINUTE, limit: 120 },
   tradePlacementPerUser: { windowMs: HOUR, limit: 60 },
+  depositRequestPerUser: { windowMs: HOUR, limit: 10 },
 } as const;
 
 export const SESSION_COOKIE_NAME = "mktrading_session";

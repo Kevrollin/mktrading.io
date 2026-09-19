@@ -11,6 +11,7 @@ const BASE_NAV = [
   { label: "Overview", href: "/app" },
   { label: "Trade", href: "/app/trade" },
   { label: "Wallet", href: "/app/wallet" },
+  { label: "Deposits", href: "/app/deposits" },
   { label: "Security", href: "/app/security" },
   { label: "Profile", href: "/app/profile" },
 ];

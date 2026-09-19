@@ -41,6 +41,11 @@ export const ledgerAccounts = pgTable(
 );
 
 export const transactionTypeValues = [
+  // Deliberately never posted — see lib/deposits/state-machine.ts. A
+  // deposit request has no existing ledger value to move until
+  // confirmed (unlike WITHDRAWAL_PENDING, which locks value the user
+  // already owns), so "pending" lives only in deposits.status, not as a
+  // ledger entry. Don't wire this up without re-reading that reasoning.
   "DEPOSIT_PENDING",
   "DEPOSIT_CONFIRMED",
   "TRADE_STAKE_LOCK",
